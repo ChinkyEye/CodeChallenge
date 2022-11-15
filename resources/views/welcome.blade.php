@@ -82,11 +82,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    {{ config('app.name', 'Tech Smart School') }}
-                </div>
-
-                <div class="links">
-                    <a href="https://techware.com.np">Techware Pvt. Ltd.</a>
+                    {{ config('app.name') }}
                 </div>
             </div>
         </div>
