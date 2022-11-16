@@ -18,6 +18,14 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected static $logAttributes = ['name', 'email'];
+    protected static $recordEvents = ['created'];
+    protected static $logName = 'User';
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return "You have {$eventName} User";
+    }
 
     protected $fillable = [
         'name',
