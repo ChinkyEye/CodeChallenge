@@ -40,7 +40,6 @@ class everyHour extends Command
     public function handle()
     {
         // return 0;
-        // DB::table('schedule')->where('id', Auth::user()->id)->update(['name','name is change']);
         DB::table('schedule')->delete();
         echo "Operation Done";
     }
