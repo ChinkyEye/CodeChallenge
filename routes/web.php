@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\HomeController;
+// use App\Http\Controllers\Staff\StaffController;
+// use App\Http\Controllers\Manager\StaffController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,12 +24,16 @@ Auth::routes();
 
 Route::namespace('App\Http\Controllers\Manager')->prefix('manager')->name('manager.')->middleware(['manager'])->group(function(){
     Route::get('/', [App\Http\Controllers\Manager\HomeController::class, 'index'])->name('home');
+    Route::resource('address', AddressController::class );
+    Route::resource('student', StudentController::class );
+    
 
 
 });
 Route::namespace('App\Http\Controllers\Staff')->prefix('staff')->name('staff.')->middleware(['staff'])->group(function(){
     Route::get('/', [App\Http\Controllers\Staff\HomeController::class, 'index'])->name('home');
-
+    Route::resource('address', AddressController::class );
+    Route::resource('student', StudentController::class );
 
 });
 Route::get('token',[App\Http\Controllers\Api\HomeController::class, 'token']);

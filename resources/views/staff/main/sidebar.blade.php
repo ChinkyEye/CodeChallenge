@@ -15,9 +15,15 @@
     <nav class="mt-2">
        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
          <li class="nav-item">
-          <a href="#" class="nav-link">
+          <a href="{{ route('staff.address.index')}}" class="nav-link">
             <i class="far fa-calendar-alt nav-icon"></i>
-            <p>Events</p>
+            <p>Address</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('staff.student.index')}}" class="nav-link">
+            <i class="far fa-user nav-icon"></i>
+            <p>Student</p>
           </a>
         </li>
       </ul>

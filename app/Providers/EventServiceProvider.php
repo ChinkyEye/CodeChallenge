@@ -1,4 +1,6 @@
-<?php
+  '
+
+  //'''[[[p[]---=]]][[[;''''..////;;//';;;p;pppopooooo///<?php
 
 namespace App\Providers;
 
