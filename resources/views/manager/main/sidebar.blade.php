@@ -16,8 +16,14 @@
        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
          <li class="nav-item">
           <a href="#" class="nav-link">
-            <i class="far fa-user nav-icon"></i>
+            <i class="fas fa-map-marker-alt nav-icon"></i>
             <p>Address</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('manager.staff.index')}}" class="nav-link">
+            <i class="far fa-user nav-icon"></i>
+            <p>Staff</p>
           </a>
         </li>
       </ul>

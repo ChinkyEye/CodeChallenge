@@ -26,6 +26,8 @@ Route::namespace('App\Http\Controllers\Manager')->prefix('manager')->name('manag
     Route::get('/', [App\Http\Controllers\Manager\HomeController::class, 'index'])->name('home');
     Route::resource('address', AddressController::class );
     Route::resource('student', StudentController::class );
+    Route::resource('staff', StaffController::class );
+
     
 
 
