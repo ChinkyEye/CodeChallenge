@@ -26,6 +26,12 @@
             <p>Staff</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{ route('manager.student.index')}}" class="nav-link">
+            <i class="far fa-user nav-icon"></i>
+            <p>Student</p>
+          </a>
+        </li>
       </ul>
     </nav>
   </div>
