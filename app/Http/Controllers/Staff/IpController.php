@@ -4,12 +4,9 @@ namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
-use Auth;
-use App\Models\User;
+use Location;
 
-class HomeController extends Controller
+class IpController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,22 +15,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // dd(User::permission('write articles')->get());
+        $location = Location::get('103.121.173.32');
+        // dd($location);
 
-        // Auth::user()->givePermissionTo('write articles');
-        // Auth::user()->assignRole('editor');
-        // $role = Role::create(['name' => 'editor']);
-        // $permission = Permission::create(['name' => 'write articles']);
-
-
-
-        // $roles = Role::findById(2);
-        // $permissions = Permission::findById(1);
-        // $roles->revokePermissionTo($permissions);
-        // $roles->givePermissionTo($permissions);
-        // $permissions->assignRole($roles);
-        // dd($roles);
-        return view('staff.main.home');
+        $method1 = request()->ip();
+        $method2 = request()->getClientIp();
+        // dd($method1,$method2);
     }
 
     /**

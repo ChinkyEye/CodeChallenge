@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Address;
 use Auth;
 use DB;
+use App\Events\AddressCreated;
 
 class AddressController extends Controller
 {
@@ -15,15 +16,22 @@ class AddressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('role:writer', ['only' => ['create']]);
+    }
+
     public function index()
     {
         $datas = DB::table('addresses')
-                    // ->select('is_active')
                     ->where('is_active',true)
                     ->get();
-        $lol = Address::where('is_active',true)->get();            
-        return view('staff.address.index', ['data' => $datas]);
-        // return view('staff.address.index', compact('datas'));
+        $data = Address::orderBy('id','DESC')
+                        // ->where('is_active',true)
+                        ->get();            
+        // return view('staff.address.index', ['data' => $datas]);
+        return view('staff.address.index', compact('data'));
     }
 
     /**
@@ -44,23 +52,24 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-        //     'name' => 'required',
-        // ]);
-
-        // $addresses= Address::create([
-        //     'name' => $request['name'],
-        // ]);
-        // $pass = array(
-        //     'message' => 'Data added successfully!',
-        //     'alert-type' => 'success'
-        // );
-        // return redirect()->route('staff.address.index')->with($pass);
-
-        DB::table('addresses')->insert([
-            'name' => $request->name,
+        $this->validate($request, [
+            'name' => 'required',
         ]);
-        return redirect()->route('staff.address.index');
+
+        $addresses= Address::create([
+            'name' => $request['name'],
+        ]);
+        $pass = array(
+            'message' => 'Data added successfully!',
+            'alert-type' => 'success'
+        );
+        event(new AddressCreated($addresses));
+        return redirect()->route('staff.address.index')->with($pass);
+
+        // DB::table('addresses')->insert([
+        //     'name' => $request->name,
+        // ]);
+        // return redirect()->route('staff.address.index');
     }
 
     /**
@@ -82,7 +91,8 @@ class AddressController extends Controller
      */
     public function edit($id)
     {
-        //
+        $datas = Address::find($id);
+        return view('staff.address.edit', compact('datas'));
     }
 
     /**
@@ -92,9 +102,13 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Address $address)
     {
-        //
+        $main_data = $request->all();
+        // $main_data['resolved_by'] = Auth::user()->id;
+        $address->update($main_data);
+        return redirect()->route('staff.address.index');
+
     }
 
     /**
@@ -106,5 +120,33 @@ class AddressController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function isActive(Request $request,$id)
+    {
+        $get_is_active = Address::where('id',$id)
+                        ->value('is_active');
+        $isactive = Address::find($id);
+        if($get_is_active == 0){
+            $isactive->is_active = 1;
+            $notification = array(
+              'message' => $isactive->name.' is Active!',
+              'alert-type' => 'success'
+          );
+        }
+        else {
+            $isactive->is_active = 0;
+            $notification = array(
+              'message' => $isactive->name.' is inactive!',
+              'alert-type' => 'error'
+          );
+        }
+        if(!($isactive->update())){
+            $notification = array(
+              'message' => 'data could not be changed!',
+              'alert-type' => 'error'
+          );
+        }
+        return back()->with($notification)->withInput();
     }
 }

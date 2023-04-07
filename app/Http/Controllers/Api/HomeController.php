@@ -6,6 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
+use Validator;
+use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\URL;
+use Mail;
+
 
 class HomeController extends Controller
 {
@@ -35,6 +41,89 @@ class HomeController extends Controller
         else{
            return response()->json(['success'=>false,'message'=>'Invalid username or password']);
         
+        }
+    }
+
+    public function register(Request $request)
+    {
+        // dd($request);
+        $validators = Validator::make($request->all(),[
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            // 'c_password' => 'required|same:password'
+        ]);
+
+        if($validators->fails())
+        {
+            $response = [
+                'success' => false,
+                'message' => $validators->errors()
+            ];
+            return response()->json($response, 400);
+        }
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        $user = User::create($input);
+        $success['token'] = $user->createToken('MyApp')->plainTextToken;
+        $success['name'] = $user->name;
+        $response = [
+            'success' => true,
+            'message' => "data is succesfully register",
+            'data' => $success
+        ];
+        return response()->json($response);
+    }
+
+    public function logout(Request $request)
+    {
+        try
+        {
+            Auth::user()->currentAccessToken()->delete();
+            // $request->user()->currentAccessToken()->delete();
+            // auth()->logout();
+            return response()->json(['success' => true,'message' =>'User log out']);
+
+        }catch(\Exception $e)
+        {
+
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function sendVerifyMail($email)
+    {
+        if(Auth::user())
+        {
+            $user = User::where('email',$email)->get();
+            if(count($user) > 0)
+            {
+                $random = Str::random(50);
+                $domain = URL::to('/');
+                $url = $domain.'/verifyemail/'.$random;
+
+                $data['url'] = $url;
+                $data['email'] = $email;
+                $data['title'] = "Email Verification";
+                $data['body'] = "Plese click below to verify the email";
+                Mail::send('verifyemail',['data' => $data], function($message) use ($data){
+                    $message->to($data['email'])->subject($data['title']);
+                });
+                
+                $user = User::find($user[0]['id']);
+                $user->remember_token = $random;
+                $user->save();
+                return response()->json(['success' => true , 'message' => 'mail is sent']);
+
+
+            }else{
+                return response()->json(['success' => false, 'message' => 'user is not found']);
+            }
+
+        }
+        else
+        {
+            return response()->json(['success' => false, 'message' => 'user is not authenticated']);
         }
     }
 

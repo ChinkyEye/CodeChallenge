@@ -12,4 +12,19 @@ class Address extends Model
         'name',
         'is_active',
     ];
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = ucwords($value);
+    }
+
+    // public function setNameAttribute($value)
+    // {
+    //     $this->attributes['name'] = strtolower($value);
+    // }
+
+    public function getNameAttribute($value)
+    {
+        return strtolower($value);
+    }
 }
