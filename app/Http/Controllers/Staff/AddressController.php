@@ -19,7 +19,7 @@ class AddressController extends Controller
 
     public function myDay()
     {
-        
+        return "some changes is made via this function";
     }
 
     public function __construct()
