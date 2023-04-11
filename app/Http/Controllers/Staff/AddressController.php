@@ -17,6 +17,11 @@ class AddressController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function myDay()
+    {
+        
+    }
+
     public function __construct()
     {
         $this->middleware('role:writer', ['only' => ['create']]);
