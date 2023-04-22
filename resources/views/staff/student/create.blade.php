@@ -72,6 +72,25 @@
           </span>
           @enderror
         </div>
+        <div class="form-group item1">
+          <label for="image">Image</label>
+          <input type="file"  class="form-control max" id="image" placeholder="write..." name="image" autocomplete="off" autofocus value="{{old('image')}}">
+          <button type="button" class="btn btn-primary item">Add</button>
+          @error('image')
+          <span class="text-danger font-italic" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+          @enderror
+        </div>
+
+        <div class="form-group item2" style="display:none">
+          <div class="item3">
+            <label for="pdf">File</label>
+            <input type="file"  class="form-control max" placeholder="write..." name="pdf" autocomplete="off" autofocus value="{{old('pdf')}}">
+            <button type="button" class="btn-danger">Remove</button>
+          </div>
+        </div>
+
       </div>
       <div class="card-footer justify-content-between">
         <button type="submit" class="btn btn-info text-capitalize">Save</button>
@@ -80,3 +99,33 @@
   </div>
 </section>
 @endsection
+@push('javascript')
+<script>
+  $(document).ready(function(){
+    $(".item").click(function(){
+      var inputHtml = $('.item2').html();
+      $('.item1').after(inputHtml);
+       var c = 100;
+       var c=200;
+       let x = 10;
+       x = 20;
+       const name = "milan";
+       {
+        var c= 500;
+        let x = 30;
+        const name = "arjun";
+       }
+       console.log(name);
+       console.log(c,x);
+
+    })
+  });
+
+  $("body").on("click",'.btn-danger',function(){
+    // var lols = $(this).closest('div.item3');
+    var lols = $(this).parents('div.item3').remove();
+    console.log(lols);
+  })
+
+</script>
+@endpush
