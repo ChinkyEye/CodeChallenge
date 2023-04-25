@@ -53,6 +53,7 @@ Route::namespace('App\Http\Controllers\Staff')->prefix('staff')->name('staff.')-
     Route::resource('address', AddressController::class );
     Route::get('address/isactive/{id}', [App\Http\Controllers\Staff\AddressController::class, 'isActive'])->name('address.active');
     Route::resource('student', StudentController::class );
+    Route::resource('detail', DetailController::class );
     Route::get('ip', [IpController::class,'index'] );
 
 });
