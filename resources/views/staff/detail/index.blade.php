@@ -67,7 +67,11 @@ do{
   let boy2 = "khimding";
   let fullname = "my name is" + boy1;
   // let fullname = `my name is ${boy1}`;
-  console.log(fullname);
+  // console.log(fullname);
 
+</script>
+<script>
+  let a = "milan";
+  console.log(a.toUpperCase());
 </script>
 @endpush
