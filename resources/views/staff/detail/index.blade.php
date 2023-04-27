@@ -72,6 +72,43 @@ do{
 </script>
 <script>
   let a = "milan";
-  console.log(a.toUpperCase());
+  // console.log(a.toUpperCase());
+  // console.log(a.slice(2,4));
+  // console.log(a.replace("m","n"));
+  let num = [2, 3, 5];
+  // let joins = num.concat('2');
+  // let try1 = num.pop();
+  let try2 = num.push(6);
+  let try3 = num.shift();
+  let try4 = num.unshift(0);
+  // console.log(try4,num.length);
+  let array = [10,11,12,13,14,15];
+  let new_array = num.concat(array);
+  let new_data = array.splice(2,2,51,52);
+  // console.log(new_data,array);
+  // console.log(array.length);
+  // console.log(delete(array[0]),array,array.length);
+  // console.log(new_array);
+  // console.log(array.reverse());
+  array.forEach((element) =>{
+    // console.log(element*element);
+  })
+
+  let name = "Hari";
+  let arr = Array.from(name);
+  // console.log(arr);
+</script>
+<script>
+  let arrays = [2,3,4];
+  // let m =arrays.map((value) => {
+  //   return value * 1;
+  // })
+  // let n = arrays.filter((value)=>{
+  //   return value > 3;
+  // })
+  let p = arrays.reduce((value, data ) => {
+    return value * data;
+  })
+    console.log(p);
 </script>
 @endpush
